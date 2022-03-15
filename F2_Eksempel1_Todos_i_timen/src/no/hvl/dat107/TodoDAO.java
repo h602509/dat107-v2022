@@ -15,12 +15,12 @@ public class TodoDAO {
 	
 	/* --------------------------------------------------------------------- */
 
-	public String/*?*/ finnTodoMedPk(/*TODO*/) {
+	public Todo finnTodoMedPk(int id) {
 		
 		EntityManager em = emf.createEntityManager();
 
 		try {
-			return null; /*TODO*/
+			return em.find(Todo.class, id);
 
 		} finally {
 			em.close();
@@ -29,7 +29,7 @@ public class TodoDAO {
 
 	/* --------------------------------------------------------------------- */
 
-	public String/*?*/ finnAlleTodos(/*TODO*/) {
+	public List<Todo> finnAlleTodos() {
 		
 		EntityManager em = emf.createEntityManager();
 		
@@ -43,7 +43,7 @@ public class TodoDAO {
 
 	/* --------------------------------------------------------------------- */
 
-	public String/*?*/  finnTodoMedTekst(/*TODO*/) {
+	public Todo finnTodoMedTekst(String tekst) {
 		EntityManager em = emf.createEntityManager();
 		
 		try {
@@ -56,7 +56,7 @@ public class TodoDAO {
 	
 	/* --------------------------------------------------------------------- */
 
-	public String/*?*/  finnTodosMedTekst(/*TODO*/) {
+	public List<Todo> finnTodosMedTekst(String tekst) {
 		EntityManager em = emf.createEntityManager();
 		
 		try {
@@ -69,7 +69,7 @@ public class TodoDAO {
 
 	/* --------------------------------------------------------------------- */
 
-	public void/*TODO*/ lagreNyTodo(/*TODO*/) {
+	public void lagreNyTodo(int id, String tekst) {
 		
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
@@ -77,7 +77,8 @@ public class TodoDAO {
 		try {
 			tx.begin();
 			
-			/*TODO*/
+			Todo todo = new Todo(id, tekst);
+			em.persist(todo);
 			
 			tx.commit();
 
@@ -93,7 +94,7 @@ public class TodoDAO {
 
 	/* --------------------------------------------------------------------- */
 
-	public void/*TODO*/ slettTodoMedPk(/*TODO*/) {
+	public void slettTodoMedPk(int id) {
 		
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
@@ -101,8 +102,12 @@ public class TodoDAO {
 		try {
 			tx.begin();
 			
-			/*TODO*/
+//			Todo todo = new Todo(id, "");
+//			todo = em.merge(todo);
 			
+			Todo todo = em.find(Todo.class, id);
+			em.remove(todo);
+			em.
 			tx.commit();
 
 		} catch (Throwable e) {
